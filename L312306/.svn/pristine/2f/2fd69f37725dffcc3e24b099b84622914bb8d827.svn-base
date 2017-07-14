@@ -1,0 +1,44 @@
+package test.java.sessionFactory;
+
+import org.hibernate.SessionFactory;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.java.service.impl.ServiceUuserImpl;
+
+public class SessionTest {
+
+	private ApplicationContext ctx;
+	private ServiceUuserImpl xxxxx; 
+	SessionFactory sessionFactory = null;
+
+	@Before
+	public void setUp() throws Exception {
+		ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+	}
+
+	@Test
+	public void testSessionFactory() {
+	sessionFactory = (SessionFactory) ctx.getBean("sessionFactory");
+	System.out.println(sessionFactory);
+//		xxxxx = (ServiceUuserImpl) ctx.getBean("uuserService");
+	}
+
+	@After
+	public void tearDown() throws Exception {
+	}
+	@Test
+	public void test3() {
+		sessionFactory = (SessionFactory) ctx.getBean("sessionFactory");
+		System.out.println(sessionFactory.openSession());
+	}
+
+	@Test
+	public void test() throws Exception {
+
+		
+	}
+}

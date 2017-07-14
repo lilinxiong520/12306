@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+ 	<package name="uuser" extends="struts-default" namespace="/" >
+ 		
+ 		<global-results><result name="error" type="redirect">login.jsp</result></global-results>
+ 		
+ 		<action name="uuser_login" class="uuserAction" method="login">
+ 			<result >index.jsp</result>
+ 		</action>
+ 		<action name="uuser_register" class="uuserAction" method="register">
+ 			<result >login.jsp</result>
+ 		</action>
+ 		
+ 	</package>
+</struts>

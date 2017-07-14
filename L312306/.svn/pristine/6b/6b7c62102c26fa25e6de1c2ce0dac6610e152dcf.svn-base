@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+ 	<package name="route" namespace="/" extends="struts-default">
+ 	<!-- 定义一个全部变量 用于跳转到Error页面 -->
+ 		<global-results><result name="error" type="redirect">/error.jsp</result></global-results>
+ 		
+ 		<action name="route_find_from_to_station" class="routeAction" method="findByStationInfo">
+ 			<result>index.jsp</result>
+ 		</action>
+ 		
+ 		<action name="route_getTrain" class="routeAction" method="getTrain">
+ 			<result>buyTicket.jsp</result>
+ 		</action>
+ 		<action name="route_findAll" class="routeAction" method="findAll">
+ 			<result >route/routeList.jsp</result>
+ 		</action>
+ 		<action name="route_delete" class="routeAction" method="delete">
+ 			<result name="success" type="redirectAction" >route_findAll.action</result>
+ 		</action>
+ 		<action name="route_update" class="routeAction" method="update">
+ 			<result name="success" type="redirectAction" >route_findAll.action</result>
+ 		</action>
+ 		<action name="route_find_ById" class="routeAction" method="findById">
+ 			<result name="success" type="dispatcher"  >route/routeList.jsp</result>
+ 			<result name="updatesuccess" type="dispatcher">route/routeInfo.jsp</result>
+ 			
+ 		</action>
+ 		<action name="route_find_ByName" class="routeAction" method="findByName">
+ 			<result >route/routeList.jsp</result>
+ 		</action>
+ 		<action name="route_save" class="routeAction" method="save">
+ 			<result  name="success" type="redirectAction">route_findAll.action</result>
+ 		</action>
+ 		<action name="route_find_findByProperty" class="routeAction" method="findByProperty">
+ 			<result >route/routeList.jsp</result>
+ 		</action>
+ 	</package>
+</struts>

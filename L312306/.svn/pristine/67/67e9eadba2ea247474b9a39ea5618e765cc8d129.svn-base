@@ -1,0 +1,18 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>欢迎登录</title>
+</head>
+<body>
+<table>
+<tr>
+<td><a href="admin/login.jsp">管理员登录窗口</a> </td>
+<td><a href="adminlogin.jsp"></a> </td>
+</tr>
+</table>
+</body>
+</html>

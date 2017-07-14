@@ -1,0 +1,122 @@
+package com.java.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.java.dao.idao.IUuserDao;
+import com.java.service.iservice.IUuserService;
+
+import hibernate.Uuser;
+
+
+@Service("uuserService")
+public class ServiceUuserImpl implements IUuserService {
+	
+	@Autowired
+	@Qualifier("uuserDao")
+	IUuserDao dd;
+	
+	public ServiceUuserImpl() {
+		
+	}
+	
+	@Transactional
+	@Override
+	public String save(Uuser t) {
+		String msg = "error";
+		try {
+			//插入之前先要查找 是否存在这条数据
+//			List<Uuser> list = dd.findByName(t.getUsername());
+//			if(list == null){
+				dd.save(t);
+				msg = "success";
+//			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return msg;
+	}
+	@Transactional
+	@Override
+	public String update(Uuser newT) {
+		String msg = "error";
+		try {
+			//更新之前先要查找 是否存在这条数据
+			Uuser uuser = dd.findById(newT.getId());
+			if(uuser != null){
+				dd.update(newT);
+				msg = "success";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return msg;
+	}
+	@Transactional
+	@Override
+	public String delete(Uuser t) {
+		String msg = "error";
+		try {
+			//删除之前查看数据是否存在
+			Uuser uuser = dd.findById(t.getId());
+			if(uuser != null){
+				t.setPassword(uuser.getPassword());
+				dd.delete(t);
+				msg = "success";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return msg;
+	}
+	@Transactional
+	@Override
+	public Uuser findById(Integer k) {
+		Uuser uuser = null;
+		try {
+			uuser = dd.findById(k);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return uuser;
+	}
+	@Transactional
+	@Override
+	public List<Uuser> findAll() {
+		List<Uuser> uuserList = null;
+		try {
+			uuserList = dd.findAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return uuserList;
+	}
+	@Transactional
+	@Override
+	public List<Uuser> findByName(String name) {
+		List<Uuser> uuserList = null;
+		try {
+			uuserList = dd.findByName(name);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return uuserList;
+	}
+	@Transactional
+	@Override
+	public Uuser login(Uuser uuser2) {
+		Uuser uuser = null;
+		try {
+			uuser = dd.login(uuser2);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return uuser;
+	}
+	
+
+}

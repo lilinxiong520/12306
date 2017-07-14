@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="price" namespace="/" extends="struts-default">
+		<global-results>
+			<result name="error" type="redirect">/error.jsp</result>
+		</global-results>
+		<!-- 通配符的使用 
+			price_find_findAll  price_find_findById  price_find_findByProperty
+		-->
+		<action name="price_find_*" class="priceAction"
+			method="{1}">
+			<result name="success" type="dispatcher">/price_Info.jsp</result>
+			<result name="updatesuccess" type="dispatcher">/price_update.jsp</result>
+		</action>
+		<!-- 通配符的使用 
+			price_save  price_update  price_delete
+		-->
+		<action name="price_*" class="priceAction"
+			method="{1}">
+			<result name="success" type="redirectAction">price_find_findAll</result>
+		</action>
+	</package>
+</struts>

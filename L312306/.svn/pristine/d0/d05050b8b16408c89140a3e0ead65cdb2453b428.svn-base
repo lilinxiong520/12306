@@ -1,0 +1,196 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+
+<Meta http-equiv="Content-Type" Content="text/html; Charset=UTF-8">
+<title>12306登录</title>
+<style type="text/css">
+.clearfix:after {
+	clear: both;
+	content: ".";
+	display: block;
+	height: 0;
+	visibility: hidden;
+}
+
+.lay-sear-yp {
+	height: 40px;
+	margin-top: 10px;
+}
+
+.lay-sear {
+	background: none repeat scroll 0 0 #EEF1F8;
+	border: 1px solid #298CCE;
+	border-radius: 3px;
+	font-size: 14px;
+	height: 40px;
+	margin: 10px 0 10px;
+	padding: 7px 0;
+	position: relative;
+}
+
+.clearfix {
+	display: block;
+}
+
+.inp-txt {
+	background: none repeat scroll 0 0 #FFFFFF;
+	border: 1px solid #CFCDC7;
+	color: #999999;
+	height: 35px;
+	line-height: 18px;
+	padding: 5px 0 5px 5px;
+	width: 193px;
+}
+
+.btn122s {
+	width: 122px;
+	background-position: 0 0;
+	color: #FFFFFF;
+	height: 30px;
+	line-height: 30px;
+	background: url("./images/bg_btn.png") repeat-x scroll 0 0
+		rgba(0, 0, 0, 0);
+	border-radius: 4px;
+	color: #333333;
+	display: inline-block;
+	text-align: center;
+	text-decoration: none;
+	color: white;
+}
+
+.t-list {
+	border: 1px solid #298cce;
+}
+
+.mt10 {
+	margin-top: 10px;
+}
+
+table {
+	table-layout: fixed;
+	word-wrap: break-word;
+	margin-top: 0;
+	background: url(./images/bg_tlisthd.png) top repeat-x;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+thead {
+	display: table-header-group;
+	vertical-align: middle;
+	border-color: inherit;
+}
+
+.t-list th {
+	height: 52px;
+	background: url(./images/line_tlisth.png) right center no-repeat;
+	color: #fff;
+	overflow: hidden;
+}
+
+.t-list td {
+	border-right: 1px solid #b0cedd;
+	border-top: 1px solid #b0cedd;
+	color: #999;
+	height: 36px;
+	padding: 2px 0;
+	text-align: center;
+}
+
+div.dhx_modal_cover {
+	border: currentColor;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	_height: 0;
+	_overflow: hidden;
+	position: fixed;
+	filter: alpha(opacity = 50);
+	opacity: .5;
+	z-index: 19999;
+	cursor: default;
+	zoom: 1;
+	background-color: rgba(0, 0, 0, 0.09);
+}
+
+.sear-sel-bd {
+	border: 1px solid #3391d0;
+	height: 44px;
+	overflow: hidden;
+	position: relative;
+	padding: 3px 0;
+}
+.div-inline{ 
+display:inline
+} 
+.div-font{
+font-size : 0.8em;
+color : #F79209;
+margin-left: 10px;
+}
+</style>
+
+<link type="text/css" href="./js/station.css" rel="stylesheet" >
+
+
+
+
+<script type="text/javascript">
+
+</script>
+</head>
+<body >
+	<div>
+		<div class="div-inline">
+			<div class="div-inline" style="width: 30%" >
+				<a href="http://www.12306.cn/"><img alt=""
+					src="./images/12306_logo.png"> </a>
+				</div>
+				<div class="div-inline div-font" style="width: 70%">
+					
+					<span class="div-inline" style="color: #666666"><span>意见反馈:<a
+							class="cursor colorA" href="mailto:12306yjfk@rails.com.cn">12306yjfk@rails.com.cn</a>
+							&nbsp;&nbsp;&nbsp;&nbsp;xxxx先生您好!!!
+					</span> 
+				</div>
+				<div class="div-inline div-font">
+						<a href="/otn/appDownload/init" target="true">手机版</a>
+					</div>
+					<div class="div-inline div-font">
+					<a href="/otn/index/initMy12306" class="menu-bd" id="js-my">我已购买的票<b></b>
+					</a>
+			</div>
+		</div>
+	</div>
+	<form>
+		<h3>车次信息</h3>
+		<div class="lay-sear lay-sear-yp clearfix" style="text-align: center;">
+			2017-07-11（周二）K600次广州站（15:02开）—北京西站（21:00到）<br/>
+			软卧（￥750.0）无票 硬卧（￥426.0）无票 硬座（￥251.0）无票 无座（￥251.0）有票
+		</div>
+		<div style="width: 100%" id="title_div"></div>
+		<h3>乘客信息</h3>
+		<div class="lay-sear lay-sear-yp clearfix" style="text-align: center;">
+			<input type="checkbox" name="username" />李林雄&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="checkbox" name="username" />小明&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="checkbox" name="username" />小芳&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="checkbox" name="username" />小红&nbsp;&nbsp;&nbsp;&nbsp;
+			
+		</div>
+		<h3>座位信息</h3>
+		<div class="lay-sear lay-sear-yp clearfix" style="text-align: center;">
+			<input type="checkbox" name="seat" />硬座(￥100.0)&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="checkbox" name="seat" />一等座(￥100.0)&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="checkbox" name="seat" />特等座(￥100.0)&nbsp;&nbsp;&nbsp;&nbsp;
+		</div>
+	</form>
+	<!-- 遮罩 -->
+	<div class="dhx_modal_cover" style="display: none; text-align: center margin-top: 20dp;">
+		<img alt="" src="./images/loading.gif" style="margin-top: 240px;">
+	</div>
+</body>
+</html>

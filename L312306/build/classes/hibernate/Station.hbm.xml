@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-7-10 16:57:50 by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="hibernate.Station" table="STATION" schema="L3" optimistic-lock="version"
+    dynamic-update="true" dynamic-insert="true" select-before-update="true">
+        <id name="id" type="java.lang.String">
+            <column name="ID" length="20" />
+            <generator class="assigned" />
+        </id>
+        <property name="name" type="java.lang.String">
+            <column name="NAME" length="20" not-null="true" />
+        </property>
+        <property name="pinyin" type="java.lang.String">
+            <column name="PINYIN" length="20" not-null="true" />
+        </property>
+        <property name="region" type="java.lang.String">
+            <column name="REGION" length="20" not-null="true" />
+        </property>
+        <property name="range" type="java.lang.Integer">
+            <column name="RANGE" precision="10" scale="0" />
+        </property>
+        <property name="company" type="java.lang.String">
+            <column name="COMPANY" length="20" />
+        </property>
+        <property name="address" type="java.lang.String">
+            <column name="ADDRESS" length="50" />
+        </property>
+        <property name="con1" type="java.lang.String">
+            <column name="CON1" length="50" />
+        </property>
+        <property name="con2" type="java.lang.String">
+            <column name="CON2" length="50" />
+        </property>
+        <property name="con3" type="java.lang.String">
+            <column name="CON3" length="50" />
+        </property>
+        <property name="con4" type="java.lang.String">
+            <column name="CON4" length="50" />
+        </property>
+        <property name="con5" type="java.lang.String">
+            <column name="CON5" length="50" />
+        </property>
+        <set name="plans" table="PLAN" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="SID" length="20" />
+            </key>
+            <one-to-many class="hibernate.Plan" />
+        </set>
+        <set name="trainsForStartstation" table="TRAIN" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="STARTSTATION" length="20" not-null="true" />
+            </key>
+            <one-to-many class="hibernate.Train" />
+        </set>
+        <set name="trainsForEndstation" table="TRAIN" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ENDSTATION" length="20" not-null="true" />
+            </key>
+            <one-to-many class="hibernate.Train" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,242 @@
+package com.java.service.impl;
+
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.java.dao.idao.ICarriageDao;
+import com.java.dao.idao.IRouteDao;
+import com.java.dao.idao.ISeatDao;
+import com.java.dao.pojo.RouteInfo;
+import com.java.service.iservice.IRouteService;
+import com.java.util.ComputeSerialUtil;
+
+import hibernate.Carriage;
+import hibernate.Route;
+import hibernate.Seat;
+import jdk.internal.org.objectweb.asm.tree.IntInsnNode;
+
+@Service("routeService")
+public class ServiceRouteImpl implements IRouteService {
+	@Autowired
+	@Qualifier("routeDao")
+	private IRouteDao routeDao;
+	
+	@Autowired
+	@Qualifier("carriageDao")
+	private ICarriageDao carriageDao;
+	
+	@Autowired
+	@Qualifier("seatDao")
+	private ISeatDao seatDao;
+
+	@Transactional
+	@Override
+	public String save(Route t) {
+		String msg = "error";
+		try {
+			List<Route> routes = routeDao.findByProperty("id", t.getId());
+			if (routes.size() == 0) {
+				routeDao.save(t);
+				msg = "success";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return msg;
+	}
+
+	@Transactional
+	@Override
+	public String delete(Route t) {
+		String msg = "error";
+		try {
+			Route e = routeDao.findById(t.getId());
+			if (e != null) {
+				routeDao.delete(e);
+				msg = "success";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return msg;
+	}
+
+	@Transactional
+	@Override
+	public String update(Route newT) {
+		String msg = "error";
+		try {
+			Route e = routeDao.findById(newT.getId());
+			if (e != null) {
+				routeDao.update(newT);
+				msg = "success";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return msg;
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public List<Route> findAll() {
+		List<Route> routes = null;
+		try {
+			routes = routeDao.findAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return routes;
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public Route findById(Integer k) {
+		Route route = null;
+		try {
+			route = routeDao.findById(k);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return route;
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public List<Route> findByProperty(String propName, Object propVal) {
+		List<Route> routes = null;
+		try {
+			routes = routeDao.findByProperty(propName, propVal);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return routes;
+	}
+	
+	//chepiao 
+	@Transactional(readOnly = true)
+	@Override
+	public List<RouteInfo> findByStationInfo(String fromStation, String toStation) {
+		List<RouteInfo> routeInfos = new ArrayList<>();
+		try {
+			List<Object[]> objects = routeDao.findByStationInfo(fromStation,toStation);
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+			NumberFormat nf = new  DecimalFormat( "0.0 "); 
+			//数据封装
+			for (Object[] objects2 : objects) {
+				RouteInfo routeInfo = new RouteInfo();
+				
+				//private String tid;  //列车次
+				String tid = objects2[0].toString();
+				List<Carriage> carriages = carriageDao.findByProperty("train.id", tid);
+				routeInfo.setCarriages(carriages);
+				routeInfo.setTid(tid);  //车次
+				//private String fromStation;  //始发站  objects2[1].toString();
+				routeInfo.setFromStation(fromStation);
+				//private String toStation; //终点站  objects2[2].toString()
+				routeInfo.setToStation(toStation);
+				
+				//private Date startime; //发车时间
+				String starttime = objects2[3].toString();
+				routeInfo.setStartime(starttime);
+				
+				//private Date endtime;  //到达时间
+				String endtime = objects2[4].toString();
+				routeInfo.setEndtime(endtime);
+				
+				//private String fromsiteorder; //出发地的车站序列号
+				String ft = objects2[5].toString();
+				routeInfo.setFromsiteorder(ft);
+				
+				//private String tositeorder; //达到站的车站序列号
+				String tt = objects2[6].toString();
+				routeInfo.setTositeorder(tt);
+				
+				//private String frommile;  //出发地到始发站的里程数
+				routeInfo.setFrommile(objects2[7].toString());
+				
+				//private String tomile; //终点站到始发站的里程数
+				routeInfo.setTomile(objects2[8].toString());
+				
+				//private Double price;  //区间价格
+				int price = (Integer.parseInt(objects2[8].toString())-Integer.parseInt(objects2[7].toString()));
+				routeInfo.setPrice((double)price+0.5);
+				
+				//相差时间
+				Date a = sdf.parse(starttime);
+				Date b = sdf.parse(endtime);
+				long c = (b.getTime() - a.getTime());
+				//计算历时
+				Double dlasta = c/1000/(3600*1.0);
+				Double dlastb = Double.parseDouble(nf.format(dlasta));
+				String last = (dlastb)+"小时";
+				routeInfo.setLast(last);
+				
+				
+				List<Seat> seats = seatDao.findByProperty("train.id", tid); //此段已售出信息
+				
+				Map<String, Integer> map = new HashMap<>();      //用于存储所有卖出的票信息 方便后续使用
+				
+				//计算与余票surplusTicket
+				int surplusTicket = 100;  //获取车厢所有的车票  将所有的座位号加入到list集合中  默认是100张
+				List<Integer> listT = routeInfo.getListT();
+				for(int i = 1;i <= surplusTicket; i++){
+					listT.add(i);
+				}
+				if(seats != null && seats.size() > 0 ){
+					int yft  = Integer.parseInt(ft);   //用户选择的起点站序号
+					int ytt = Integer.parseInt(tt);   //用户选择终点站序号
+					//封装到map
+					for (Seat seat : seats) {
+						int gft = ComputeSerialUtil.getSerial(seat.getStartstation());   //起点站序号
+						
+						int gtt = ComputeSerialUtil.getSerial(seat.getEndstation());     //终点站序号
+						
+						Integer snum = seat.getSeatnumber();   //卖出票的座位号
+						
+						map.put(gft+","+gtt, snum);     //卖出去的票全部封装为map  //方便以后调用
+						
+						//计算余票
+						if(gft == yft){   //起始站相同 这张票不能购买
+							surplusTicket-=1;
+							listT.remove(snum);        //如果这张车票已经被购买 那么就移除
+						}else if(gft < ytt && gtt >= yft){  //这张车票刚好在用户选择车票的区间
+							surplusTicket-=1;
+							listT.remove(snum);            //如果这张车票已经被购买 那么就移除
+						}else if(gft < yft && gtt > ytt){    //这张车票刚好在用户选择车票的区间
+							surplusTicket-=1;
+							listT.remove(snum);    //如果这张车票已经被购买 那么就移除
+						}
+					}
+				}
+				
+				//计算余票  默认总票为10张
+				routeInfo.setSurplusTicket(surplusTicket);
+				
+				routeInfo.setListT(listT);  //经过筛选之后可以购买的车票号
+				
+				routeInfo.setMap(map);
+				
+				routeInfos.add(routeInfo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return routeInfos;
+	}
+
+}

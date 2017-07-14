@@ -1,0 +1,9 @@
+package com.java.dao.idao;
+
+import java.util.List;
+
+import hibernate.Route;
+
+public interface IRouteDao extends IBaseDao<Route, Integer> {
+	List<Route> findByProperty(String propName, Object propVal)throws Exception;
+}

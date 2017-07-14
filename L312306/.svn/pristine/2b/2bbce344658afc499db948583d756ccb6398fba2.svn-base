@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="journey" extends="struts-default" namespace="/">
+
+		<global-results>
+			<result name="error" type="redirect">login.jsp</result>
+		</global-results>
+ 		<action name="journey_findAll" class="journeyAction" method="findAll">
+ 			<result name="success" type="dispatcher" >journey/journeyList.jsp</result>
+ 		</action>
+	</package>
+</struts>

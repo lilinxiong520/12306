@@ -1,0 +1,9 @@
+package com.java.service.iservice;
+
+import java.util.List;
+
+import hibernate.Route;
+
+public interface IRouteService extends IBaseService<Route, Integer> {
+	List<Route> findByProperty(String propName, Object propVal);
+}

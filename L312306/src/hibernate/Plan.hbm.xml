@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-7-10 16:57:50 by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="hibernate.Plan" table="PLAN" schema="L3" optimistic-lock="version"
+    dynamic-update="true" dynamic-insert="true" select-before-update="true">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" precision="10" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="train" class="hibernate.Train" fetch="select">
+            <column name="TID" length="20" not-null="true" />
+        </many-to-one>
+        <many-to-one name="station" class="hibernate.Station" fetch="select">
+            <column name="SID" length="20" />
+        </many-to-one>
+        <property name="gnumber" type="java.lang.Integer">
+            <column name="GNUMBER" precision="10" scale="0" not-null="true" />
+        </property>
+        <property name="compare" type="java.lang.Integer">
+            <column name="COMPARE" precision="10" scale="0" not-null="true" />
+        </property>
+        <property name="con1" type="java.lang.String">
+            <column name="CON1" length="50" />
+        </property>
+        <property name="con2" type="java.lang.String">
+            <column name="CON2" length="50" />
+        </property>
+        <property name="con3" type="java.lang.String">
+            <column name="CON3" length="50" />
+        </property>
+        <property name="con4" type="java.lang.String">
+            <column name="CON4" length="50" />
+        </property>
+        <property name="con5" type="java.lang.String">
+            <column name="CON5" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

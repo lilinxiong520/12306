@@ -1,0 +1,9 @@
+package com.java.dao.idao;
+
+import java.util.List;
+
+import hibernate.Carriage;
+
+public interface ICarriageDao extends IBaseDao<Carriage, String> {
+	List<Carriage> findByProperty(String propName, Object propVal)throws Exception;
+}

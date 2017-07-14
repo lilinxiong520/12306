@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-7-10 16:57:50 by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="hibernate.Journey" table="JOURNEY" schema="L3" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" precision="10" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <property name="journeyfrom" type="java.lang.Integer">
+            <column name="JOURNEYFROM" precision="10" scale="0" not-null="true" />
+        </property>
+        <property name="journeyto" type="java.lang.Integer">
+            <column name="JOURNEYTO" precision="10" scale="0" not-null="true" />
+        </property>
+        <property name="jnumber" type="java.lang.Integer">
+            <column name="JNUMBER" precision="10" scale="0" not-null="true" />
+        </property>
+        <property name="permile" type="java.lang.Integer">
+            <column name="PERMILE" precision="10" scale="0" not-null="true" />
+        </property>
+        <property name="con1" type="java.lang.String">
+            <column name="CON1" length="50" />
+        </property>
+        <property name="con2" type="java.lang.String">
+            <column name="CON2" length="50" />
+        </property>
+        <property name="con3" type="java.lang.String">
+            <column name="CON3" length="50" />
+        </property>
+        <property name="con4" type="java.lang.String">
+            <column name="CON4" length="50" />
+        </property>
+        <property name="con5" type="java.lang.String">
+            <column name="CON5" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

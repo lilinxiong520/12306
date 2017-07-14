@@ -1,0 +1,9 @@
+package com.java.service.iservice;
+
+import java.util.List;
+
+import hibernate.Carriage;
+
+public interface ICarriageService extends IBaseService<Carriage, String> {
+	List<Carriage> findByProperty(String propName, Object propVal);
+}

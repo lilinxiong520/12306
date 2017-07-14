@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-7-10 16:57:50 by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="hibernate.Route" table="ROUTE" schema="L3" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" precision="10" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="train" class="hibernate.Train" fetch="select">
+            <column name="TID" length="20" not-null="true" />
+        </many-to-one>
+        <property name="siteorder" type="java.lang.Integer">
+            <column name="SITEORDER" precision="10" scale="0" not-null="true" />
+        </property>
+        <property name="site" type="java.lang.String">
+            <column name="SITE" length="20" not-null="true" />
+        </property>
+        <property name="mile" type="java.lang.Double">
+            <column name="MILE" precision="10" not-null="true" />
+        </property>
+        <property name="starttim" type="date">
+            <column name="STARTTIM" length="7" not-null="true" />
+        </property>
+        <property name="endtime" type="date">
+            <column name="ENDTIME" length="7" />
+        </property>
+        <property name="taytime" type="java.lang.Double">
+            <column name="TAYTIME" precision="10" not-null="true" />
+        </property>
+        <property name="con1" type="java.lang.String">
+            <column name="CON1" length="50" />
+        </property>
+        <property name="con2" type="java.lang.String">
+            <column name="CON2" length="50" />
+        </property>
+        <property name="con3" type="java.lang.String">
+            <column name="CON3" length="50" />
+        </property>
+        <property name="con4" type="java.lang.String">
+            <column name="CON4" length="50" />
+        </property>
+        <property name="con5" type="java.lang.String">
+            <column name="CON5" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+  <table-filter match-schema="L3" match-name="ADMIN"/>
+  <table-filter match-schema="L3" match-name="CARRIAGE"/>
+  <table-filter match-schema="L3" match-name="JOURNEY"/>
+  <table-filter match-schema="L3" match-name="JOURNEYRATE"/>
+  <table-filter match-schema="L3" match-name="ORDERS"/>
+  <table-filter match-schema="L3" match-name="PLAN"/>
+  <table-filter match-schema="L3" match-name="PRICE"/>
+  <table-filter match-schema="L3" match-name="ROUTE"/>
+  <table-filter match-schema="L3" match-name="SEAT"/>
+  <table-filter match-schema="L3" match-name="STATION"/>
+  <table-filter match-schema="L3" match-name="TICKET"/>
+  <table-filter match-schema="L3" match-name="TRAIN"/>
+  <table-filter match-schema="L3" match-name="UUSER"/>
+</hibernate-reverse-engineering>

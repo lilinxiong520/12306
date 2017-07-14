@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+ 	<package name="admin" namespace="/" extends="struts-default">
+ 	<!-- 定义一个全部变量 用于跳转到Error页面 -->
+ 		<global-results><result name="error" type="redirect">/error.jsp</result></global-results>
+ 		
+ 		<action name="admin_login" class="adminAction" method="login">
+ 			<result name="success" type="redirectAction">admin_findAll.action</result>
+ 		</action>
+ 		
+ 		<action name="admin_findAll" class="adminAction" method="findAll">
+ 			<result >admin/adminList.jsp</result>
+ 		</action>
+ 		<action name="admin_delete" class="adminAction" method="delete">
+ 			<result name="success" type="redirectAction" >admin_findAll.action</result>
+ 		</action>
+ 		<action name="admin_find_ById" class="adminAction" method="findById">
+ 			<result name="success" type="redirect"  >admin/adminList.jsp</result>
+ 			<result name="updatesuccess" type="dispatcher">admin/adminInfo.jsp</result>
+ 			
+ 		</action>
+ 		<action name="admin_find_ByName" class="adminAction" method="findByName">
+ 			<result >admin/adminList.jsp</result>
+ 		</action>
+ 		<action name="admin_save" class="adminAction" method="save">
+ 			<result  name="success" type="redirectAction">admin_findAll.action</result>
+ 		</action>
+ 		
+ 	</package>
+</struts>

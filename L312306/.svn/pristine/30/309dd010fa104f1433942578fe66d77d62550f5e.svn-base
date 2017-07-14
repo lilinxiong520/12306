@@ -1,0 +1,94 @@
+package com.java.action;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.struts2.interceptor.RequestAware;
+import org.apache.struts2.interceptor.SessionAware;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+
+import com.java.dao.pojo.OrdersVo;
+import com.java.service.iservice.IOrdersService;
+import com.java.service.iservice.IOrdersVoService;
+
+import hibernate.Orders;
+import hibernate.Uuser;
+
+@Controller("ordersVoAction")
+@Scope("prototype")
+public class OrdersVoAction  implements RequestAware,SessionAware {
+	
+	private Map<String,Object> sessionMap;
+	private Map<String,Object> requstMap;
+	
+	private int id;
+	
+	@Autowired
+	@Qualifier("ordersVoService")
+	private IOrdersVoService ordersVoService;
+	
+	@Autowired
+	@Qualifier("ordersService")
+	private IOrdersService ordersService;
+	
+	
+	@Override
+	public void setRequest(Map<String, Object> requstMap) {
+		this.requstMap = requstMap;
+	}
+	@Override
+	public void setSession(Map<String, Object> sessionMap) {
+		this.sessionMap = sessionMap;
+	}
+	
+	
+	public String findByInfo(){
+		String msg = "error";
+		Uuser uuser = (Uuser) sessionMap.get("uuser");
+		if(uuser == null){
+			return msg;
+		}
+		OrdersVo ordersvo = ordersVoService.findByInfo(id);
+		if(ordersvo != null ){
+			requstMap.put("ordersvoFormService", ordersvo);
+			msg = "success";
+		}
+		return msg;
+	}
+	
+	public String findAll(){
+		String msg = "error";
+		Uuser uuser = (Uuser) sessionMap.get("uuser");
+		if(uuser == null){
+			return msg;
+		}
+		List<Orders> ordersList = ordersService.findByProperty("uuser.idnumber", uuser.getIdnumber());
+		if(ordersList != null && ordersList.size() > 0){
+			requstMap.put("ordersListFormService", ordersList);
+			msg = "success";
+		}
+		return msg;
+	}
+	
+	
+	public String delete(){
+		String msg = "error";
+		Uuser uuser = (Uuser) sessionMap.get("uuser");
+		if(uuser == null){
+			return msg;
+		}
+		Orders orders = new Orders();
+		orders.setId(id);
+		return ordersService.delete(orders);
+	}
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+}

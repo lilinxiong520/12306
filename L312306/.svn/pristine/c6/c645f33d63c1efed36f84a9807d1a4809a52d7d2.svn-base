@@ -1,0 +1,13 @@
+package com.java.util;
+
+import java.util.List;
+
+public class ComputeSeatlUtil {
+	public  static Integer getSerial(List<Integer> list,int num){  //num为总票量   list为已经购买的票
+		
+		
+		
+		System.out.println(num+"==========ComputeSerialUtil");
+		return num;
+	}
+}

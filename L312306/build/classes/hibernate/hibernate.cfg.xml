@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+    	<property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.format_sql">true</property>
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		<property name="hibernate.jdbc.batch_size">30</property>
+		<property name="hibernate.jdbc.fetch_size">100</property>
+		<property name="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext</property>
+        <!-- <property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+        <property name="hibernate.connection.password">tiger</property>
+        <property name="hibernate.connection.url">jdbc:oracle:thin:@10.3.136.6:1521:orcl</property>
+        <property name="hibernate.connection.username">l3</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property> -->
+    </session-factory>
+</hibernate-configuration>

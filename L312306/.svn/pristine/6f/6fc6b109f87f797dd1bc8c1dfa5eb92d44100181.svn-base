@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+ 	<package name="uuser" extends="struts-default" namespace="/" >
+ 		
+ 		<global-results><result name="error" type="redirect">login.jsp</result></global-results>
+ 		
+ 		<action name="uuser_login" class="uuserAction" method="login">
+ 			<result >index.jsp</result>
+ 		</action>
+ 		<action name="uuser_register" class="uuserAction" method="register">
+ 			<result >login.jsp</result>
+ 		</action>
+ 		<action name="uuser_findAll" class="uuserAction" method="findAll">
+ 			<result name="success" type="redirect">uuser/uuserList.jsp</result>
+ 		</action>
+ 		<action name="uuser_delete" class="uuserAction" method="delete">
+ 			<result name="success" type="redirectAction" >uuser_findAll.action</result>
+ 		</action>
+ 		<action name="uuser_update" class="uuserAction" method="update">
+ 			<result name="success" type="redirectAction" >uuser_findAll.action</result>
+ 		</action>
+ 		<action name="uuser_find_ById" class="uuserAction" method="findById">
+ 			<result name="success" type="dispatcher"  >uuser/uuserList.jsp</result>
+ 			<result name="updatesuccess" type="dispatcher">uuser/uuserInfo.jsp</result>
+ 			
+ 		</action>
+ 		<action name="uuser_find_ByName" class="uuserAction" method="findByName">
+ 			<result >uuser/uuserList.jsp</result>
+ 		</action>
+ 		<action name="uuser_save" class="uuserAction" method="save">
+ 			<result  name="success" type="redirectAction">uuser_findAll.action</result>
+ 		</action>
+ 		<action name="train_find_findByProperty" class="trainAction" method="findByProperty">
+ 			<result >uuser/uuserList.jsp</result>
+ 		</action>
+ 		
+ 		
+ 	</package>
+</struts>

@@ -1,0 +1,165 @@
+package com.java.service.impl;
+
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.java.dao.idao.IRouteDao;
+import com.java.dao.pojo.RouteInfo;
+import com.java.service.iservice.IRouteService;
+
+import hibernate.Route;
+
+@Service("routeService")
+public class ServiceRouteImpl implements IRouteService {
+	@Autowired
+	@Qualifier("routeDao")
+	private IRouteDao routeDao;
+
+	@Transactional
+	@Override
+	public String save(Route t) {
+		String msg = "error";
+		try {
+			List<Route> routes = routeDao.findByProperty("id", t.getId());
+			if (routes.size() == 0) {
+				routeDao.save(t);
+				msg = "success";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return msg;
+	}
+
+	@Transactional
+	@Override
+	public String delete(Route t) {
+		String msg = "error";
+		try {
+			Route e = routeDao.findById(t.getId());
+			if (e != null) {
+				routeDao.delete(e);
+				msg = "success";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return msg;
+	}
+
+	@Transactional
+	@Override
+	public String update(Route newT) {
+		String msg = "error";
+		try {
+			Route e = routeDao.findById(newT.getId());
+			if (e != null) {
+				routeDao.update(newT);
+				msg = "success";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return msg;
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public List<Route> findAll() {
+		List<Route> routes = null;
+		try {
+			routes = routeDao.findAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return routes;
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public Route findById(Integer k) {
+		Route route = null;
+		try {
+			route = routeDao.findById(k);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return route;
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public List<Route> findByProperty(String propName, Object propVal) {
+		List<Route> routes = null;
+		try {
+			routes = routeDao.findByProperty(propName, propVal);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return routes;
+	}
+	
+	@Transactional(readOnly = true)
+	@Override
+	public List<RouteInfo> findByStationInfo(String fromStation, String toStation) {
+		
+		List<RouteInfo> routeInfos = new ArrayList<>();
+		try {
+			List<Object[]> objects = routeDao.findByStationInfo(fromStation,toStation);
+			 SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+			 
+			//数据封装
+			for (Object[] objects2 : objects) {
+				RouteInfo routeInfo = new RouteInfo();
+				//private String tid;  //列车次
+				routeInfo.setTid(objects2[0].toString());
+				//private String fromStation;  //始发站
+				routeInfo.setFromStation(objects2[1].toString());
+				//private String toStation; //终点站
+				routeInfo.setToStation(objects2[2].toString());
+				//private Date startime; //发车时间
+				
+				String starttime = objects2[3].toString();
+				
+				routeInfo.setStartime(starttime);
+				//private Date endtime;  //到达时间
+				
+				String endtime = objects2[4].toString();
+				
+				routeInfo.setEndtime(endtime);
+				
+				//private String fromsiteorder; //出发地的车站序列号
+				routeInfo.setFromsiteorder(objects2[5].toString());
+				//private String tositeorder; //达到站的车站序列号
+				routeInfo.setTositeorder(objects2[6].toString());
+				//private String frommile;  //出发地到始发站的里程数
+				routeInfo.setFrommile(objects2[7].toString());
+				//private String tomile; //终点站到始发站的里程数
+				routeInfo.setTomile(objects2[8].toString());
+				//private Double price;  //区间价格
+				routeInfo.setPrice(100.0);
+				//相差时间
+				Date a = sdf.parse(starttime);
+				Date b = sdf.parse(endtime);
+				long c = (b.getTime() - a.getTime());
+				//计算历时
+				String last = (c/1000/(3600))+"小时";
+				routeInfo.setLast(last);
+				routeInfos.add(routeInfo);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return routeInfos;
+	}
+
+}

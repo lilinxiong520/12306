@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+ 	<package name="ordersVo" extends="struts-default" namespace="/" >
+ 		
+ 		<global-results><result name="error" type="redirect">login.jsp</result></global-results>
+ 		<action name="orders_findAll" class="ordersVoAction" method="findAll">
+ 			<result >ordersList.jsp</result>
+ 		</action>
+ 		<action name="orders_findByInfo" class="ordersVoAction" method="findByInfo">
+ 			<result >ordersInfo.jsp</result>
+ 		</action>
+ 		<action name="orders_delete" class="ordersVoAction" method="delete">
+ 			<result type="redirectAction">orders_findAll.action</result>
+ 		</action> 		
+ 		<action name="ordersVo_orders_save" class="ordersVoAction" method="save">
+ 			<result type="redirect">buySuccess.jsp</result>
+ 		</action> 	
+ 	</package>
+</struts>

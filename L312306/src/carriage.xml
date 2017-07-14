@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="carriage" extends="struts-default" namespace="/">
+
+		<global-results>
+			<result name="error" type="redirect">login.jsp</result>
+		</global-results>
+		<action name="carriage_find_findByProperty" class="carriageAction"
+			method="findByProperty">
+			<result name="success" type="redirect" >carriage/carriageList.jsp</result>
+			<result  name="updatesuccess" type="dispatcher">carriage/carriageList.jsp</result>
+		</action>
+	<action name="carriage_login" class="carriageAction" method="login">
+ 			<result name="success" type="redirectAction">carriage_findAll.action</result>
+ 		</action>
+ 		
+ 		<action name="carriage_findAll" class="carriageAction" method="findAll">
+ 			<result name="success" type="dispatcher" >carriage/carriageList.jsp</result>
+ 		</action>
+ 		<action name="carriage_delete" class="carriageAction" method="delete">
+ 			<result name="success" type="redirectAction" >carriage_findAll.action</result>
+ 		</action>
+ 		<action name="carriage_find_ById" class="carriageAction" method="findById">
+ 			<result name="success" type="redirect"  >carriage/carriageList.jsp</result>
+ 			<result name="updatesuccess" type="dispatcher">carriage/carriageInfo.jsp</result>
+ 			
+ 		</action>
+ 		<action name="carriage_find_ByName" class="carriageAction" method="findByName">
+ 			<result >carriage_findAll.action</result>
+ 		</action>
+ 		<action name="carriage_save" class="carriageAction" method="save">
+ 			<result  name="success" type="redirectAction">carriage_findAll.action</result>
+ 		</action>
+	</package>
+</struts>

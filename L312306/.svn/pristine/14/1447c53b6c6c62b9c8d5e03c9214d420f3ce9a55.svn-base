@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-7-10 16:57:50 by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="hibernate.Train" table="TRAIN" schema="L3" optimistic-lock="version">
+        <id name="id" type="java.lang.String">
+            <column name="ID" length="20" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="stationByStartstation" class="hibernate.Station" fetch="select">
+            <column name="STARTSTATION" length="20" not-null="true" />
+        </many-to-one>
+        <many-to-one name="stationByEndstation" class="hibernate.Station" fetch="select">
+            <column name="ENDSTATION" length="20" not-null="true" />
+        </many-to-one>
+        <property name="starttime" type="timestamp">
+            <column name="STARTTIME" length="7" not-null="true" />
+        </property>
+        <property name="endtime" type="timestamp">
+            <column name="ENDTIME" length="7" not-null="true" />
+        </property>
+        <property name="mile" type="java.lang.Double">
+            <column name="MILE" precision="10" not-null="true" />
+        </property>
+        <property name="noseatnumber" type="java.lang.Integer">
+            <column name="NOSEATNUMBER" precision="10" scale="0" />
+        </property>
+        <property name="bodytype" type="java.lang.Integer">
+            <column name="BODYTYPE" precision="10" scale="0" not-null="true" />
+        </property>
+        <property name="type" type="java.lang.Integer">
+            <column name="TYPE" precision="10" scale="0" not-null="true" />
+        </property>
+        <property name="con1" type="java.lang.String">
+            <column name="CON1" length="50" />
+        </property>
+        <property name="con2" type="java.lang.String">
+            <column name="CON2" length="50" />
+        </property>
+        <property name="con3" type="java.lang.String">
+            <column name="CON3" length="50" />
+        </property>
+        <property name="con4" type="java.lang.String">
+            <column name="CON4" length="50" />
+        </property>
+        <property name="con5" type="java.lang.String">
+            <column name="CON5" length="50" />
+        </property>
+        <set name="plans" table="PLAN" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="TID" length="20" not-null="true" />
+            </key>
+            <one-to-many class="hibernate.Plan" />
+        </set>
+        <set name="seats" table="SEAT" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="TID" length="20" not-null="true" />
+            </key>
+            <one-to-many class="hibernate.Seat" />
+        </set>
+        <set name="routes" table="ROUTE" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="TID" length="20" not-null="true" />
+            </key>
+            <one-to-many class="hibernate.Route" />
+        </set>
+        <set name="carriages" table="CARRIAGE" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="TID" length="20" not-null="true" />
+            </key>
+            <one-to-many class="hibernate.Carriage" />
+        </set>
+        <set name="tickets" table="TICKET" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="TID" length="20" not-null="true" />
+            </key>
+            <one-to-many class="hibernate.Ticket" />
+        </set>
+    </class>
+</hibernate-mapping>

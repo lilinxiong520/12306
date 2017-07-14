@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-7-10 16:57:50 by Hibernate Tools 4.3.1.Final -->
+<hibernate-mapping>
+    <class name="hibernate.Uuser" table="UUSER" schema="L3" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" precision="10" scale="0" />
+            <generator class="native" />
+        </id>
+        <property name="username" type="java.lang.String">
+            <column name="USERNAME" length="20" not-null="true" unique="true" />
+        </property>
+        <property name="password" type="java.lang.String">
+            <column name="PASSWORD" length="20" not-null="true" />
+        </property>
+        <property name="name" type="java.lang.String">
+            <column name="NAME" length="20" not-null="true" />
+        </property>
+        <property name="sex" type="java.lang.Integer">
+            <column name="SEX" precision="1" scale="0" not-null="true" />
+        </property>
+        <property name="idnumber" type="java.lang.String">
+            <column name="IDNUMBER" length="18" not-null="true" unique="true" />
+        </property>
+        <property name="tel" type="java.lang.String">
+            <column name="TEL" length="20" not-null="true" unique="true" />
+        </property>
+        <property name="type" type="java.lang.Integer">
+            <column name="TYPE" precision="10" scale="0" not-null="true" />
+        </property>
+        <property name="con1" type="java.lang.String">
+            <column name="CON1" length="50" />
+        </property>
+        <property name="con2" type="java.lang.String">
+            <column name="CON2" length="50" />
+        </property>
+        <property name="con3" type="java.lang.String">
+            <column name="CON3" length="50" />
+        </property>
+        <property name="con4" type="java.lang.String">
+            <column name="CON4" length="50" />
+        </property>
+        <property name="con5" type="java.lang.String">
+            <column name="CON5" length="50" />
+        </property>
+        <set name="orderses" table="ORDERS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="OUID" precision="10" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="hibernate.Orders" />
+        </set>
+    </class>
+</hibernate-mapping>

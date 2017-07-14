@@ -1,0 +1,58 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>员工详情信息</title>
+</head>
+<body>
+	<h3>员工信息修改</h3>
+	<form action="${pageContext.request.contextPath}/admin_update.action"
+		method="post">
+		<table border="1">
+			<tr>
+				<td>序号</td>
+				<td>管理员编号</td>
+				<td>姓名</td>
+				<td>性别</td>
+				<td>身份证号码</td>
+				<td>联系电话</td>
+				<td>类型</td>
+				<td>操作</td>
+			</tr>
+			<tr>
+				<td>${vs.count}</td>
+				<td>${admin.id}</td>
+				<td>${admin.username}</td>
+				<td>${admin.name}</td>
+				<td>${admin.sex}</td>
+				<td>${admin.idnumber}</td>
+				<td>${admin.tel}</td>
+				<td>${admin.type}</td>
+				<td>${adminFromService.id}<input type="hidden"
+					value="${adminFromService.id}" name="id" />
+				</td>
+				<td><input type="text" value="${adminFromService.username}"
+					name="username" /></td>
+				<td><input type="text" value="${adminFromService.name}"
+					name="name" /></td>
+				<td><select name="sex">
+						<option value="0"
+							${empFromService.empState=='0'?"selected='selected'":""}>男</option>
+						<option value="1"
+							${empFromService.empState=='1'?"selected='selected'":""}>女</option>
+				</select></td>
+				<td><input type="text" value="${adminFromService.idnumber}"
+					name="idnumber" /></td>
+				<td><input type="text" value="${adminFromService.tel}"
+					name="tel" /></td>
+				<td><input type="text" value="${adminFromService.type}"
+					name="type" /></td>
+				<td><input type="submit" value="点击修改"
+					onclick="return confirm('确定要修改吗')" /></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

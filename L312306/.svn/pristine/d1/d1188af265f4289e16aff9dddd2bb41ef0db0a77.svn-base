@@ -1,0 +1,126 @@
+package com.java.action;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.struts2.interceptor.RequestAware;
+import org.apache.struts2.interceptor.SessionAware;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+
+import com.java.service.iservice.IUuserService;
+import com.opensymphony.xwork2.ModelDriven;
+
+import hibernate.Uuser;
+
+@Scope("prototype")
+@Controller("uuserAction")
+public class UuserAction implements ModelDriven<Uuser>,RequestAware,SessionAware{
+	//1.取值
+	Uuser uuser2 = new Uuser();
+	Map<String, Object> requestMap;
+	//解耦合
+	@Override
+	public Uuser getModel() {
+		return uuser2;
+	}
+	
+	@Override
+	public void setRequest(Map<String, Object> requst) {
+		
+		requestMap = requst;
+	}
+	
+	private String type1;
+	
+	//2处理业务逻辑，注入Service层对象
+	@Autowired
+	@Qualifier("uuserService")
+	private IUuserService uuserService;
+	public UuserAction() {
+	}
+	public String getType() {
+		return type1;
+	}
+	public void setType(String type) {
+		this.type1 = type;
+	}
+	
+	
+	public String save(){
+		
+		System.out.println(uuser2.toString());
+		
+		return uuserService.save(uuser2);
+	}
+	public String delete(){
+		return uuserService.delete(uuser2);
+	}
+	
+	public String findAll(){
+		String msg = "error";
+		List<Uuser> uuserList = uuserService.findAll();
+		if(uuserList != null && uuserList.size() > 0){
+			requestMap.put("uuserListFromService", uuserList);
+			msg = "success";
+		}
+		return msg;
+	}
+	
+	Map<String, Object> sessionMap;
+	@Override
+	public void setSession(Map<String, Object> session) {
+		sessionMap  = session;
+		
+	}
+	public String findById(){
+		String msg = "error";
+		Uuser uuser = uuserService.findById(uuser2.getId());
+		if(uuser != null){
+			if("update".equals(type1)){
+				requestMap.put("uuserFromService", uuser);
+				msg = "updatesuccess";
+			}else{
+				List<Uuser> uuserList = new ArrayList<>();
+				uuserList.add(uuser);
+				requestMap.put("uuserListFromService", uuserList);
+				msg = "success";
+			}
+		}
+		return msg;
+	}
+	
+	public String findByName(){
+		String msg = "error";
+		List<Uuser> uuserList = uuserService.findByName(uuser2.getName());
+		if(uuserList != null && uuserList.size() > 0){
+			requestMap.put("uuserListFromService", uuserList);
+			msg = "success";
+		}
+		return msg;
+	}	
+	
+	public String update(){
+		return uuserService.update(uuser2);
+	}
+	public String login(){
+		String msg = "error";
+		Uuser uuser = uuserService.login(uuser2);
+		if(uuser!=null){
+			sessionMap.put("uuser", uuser);
+		}
+		return msg;
+	}
+	public String register(){
+		System.out.println(uuser2);
+		String register = uuserService.save(uuser2);
+		requestMap.put("uuser1", uuser2);
+		return register;
+	}
+
+
+	
+}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="plan" extends="struts-default" namespace="/">
+
+		<global-results>
+			<result name="error" type="redirect">login.jsp</result>
+		</global-results>
+		<action name="plan_find_findByProperty" class="planAction"
+			method="findByProperty">
+			<result name="success" type="redirect" >plan/planList.jsp</result>
+			<result  name="updatesuccess" type="dispatcher">plan/planList.jsp</result>
+		</action>
+	<action name="plan_login" class="planAction" method="login">
+ 			<result name="success" type="redirectAction">plan_findAll.action</result>
+ 		</action>
+ 		
+ 		<action name="plan_findAll" class="planAction" method="findAll">
+ 			<result name="success" type="dispatcher" >plan/planList.jsp</result>
+ 		</action>
+ 		<action name="plan_delete" class="planAction" method="delete">
+ 			<result name="success" type="redirectAction" >plan_findAll.action</result>
+ 		</action>
+ 		<action name="plan_find_ById" class="planAction" method="findById">
+ 			<result name="success" type="redirect"  >plan/planList.jsp</result>
+ 			<result name="updatesuccess" type="dispatcher">plan/planInfo.jsp</result>
+ 			
+ 		</action>
+ 		<action name="plan_find_ByName" class="planAction" method="findByName">
+ 			<result >plan_findAll.action</result>
+ 		</action>
+ 		<action name="plan_save" class="planAction" method="save">
+ 			<result  name="success" type="redirectAction">plan_findAll.action</result>
+ 		</action>
+	</package>
+</struts>

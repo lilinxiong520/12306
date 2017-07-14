@@ -1,0 +1,120 @@
+package com.java.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.java.dao.idao.IAdminDao;
+import com.java.service.iservice.IAdminService;
+
+import hibernate.Admin;
+
+
+@Service("adminService")
+public class ServiceAdminImpl implements IAdminService {
+	
+	@Autowired
+	@Qualifier("adminDao")
+	IAdminDao dd;
+	
+	public ServiceAdminImpl() {
+		
+	}
+	
+	@Transactional
+	@Override
+	public String save(Admin t) {
+		String msg = "error";
+		try {
+			//插入之前先要查找 是否存在这条数据
+			Admin admin = dd.findById(t.getId());
+			if(admin == null){
+				dd.save(t);
+				msg = "success";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return msg;
+	}
+	@Transactional
+	@Override
+	public String update(Admin newT) {
+		String msg = "error";
+		try {
+			//更新之前先要查找 是否存在这条数据
+			Admin admin = dd.findById(newT.getId());
+			if(admin != null){
+				dd.update(newT);
+				msg = "success";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return msg;
+	}
+	@Transactional
+	@Override
+	public String delete(Admin t) {
+		String msg = "error";
+		try {
+			//删除之前查看数据是否存在
+			Admin admin = dd.findById(t.getId());
+			if(admin != null){
+				dd.delete(t);
+				msg = "success";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return msg;
+	}
+	@Transactional
+	@Override
+	public Admin findById(Integer k) {
+		Admin admin = null;
+		try {
+			admin = dd.findById(k);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return admin;
+	}
+	@Transactional
+	@Override
+	public List<Admin> findAll() {
+		List<Admin> adminList = null;
+		try {
+			adminList = dd.findAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return adminList;
+	}
+	@Transactional
+	@Override
+	public List<Admin> findByName(String name) {
+		List<Admin> adminList = null;
+		try {
+			adminList = dd.findByName(name);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return adminList;
+	}
+	@Transactional
+	@Override
+	public boolean login(Admin admin2) {
+		Admin admin = null;
+		try {
+			admin =  dd.login(admin2);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return admin==null?false:true;
+	}
+
+}

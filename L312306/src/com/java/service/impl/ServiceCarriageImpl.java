@@ -1,0 +1,109 @@
+package com.java.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.java.dao.idao.ICarriageDao;
+import com.java.service.iservice.ICarriageService;
+
+import hibernate.Carriage;
+
+@Service("carriageService")
+public class ServiceCarriageImpl implements ICarriageService {
+	@Autowired
+	@Qualifier("carriageDao")
+	private ICarriageDao carriageDao;
+
+	@Transactional
+	@Override
+	public String save(Carriage t) {
+		String msg = "error";
+		try {
+			List<Carriage> carriages = carriageDao.findByProperty("id", t.getId());
+			if (carriages.size() == 0) {
+				carriageDao.save(t);
+				msg = "success";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return msg;
+	}
+
+	@Transactional
+	@Override
+	public String delete(Carriage t) {
+		String msg = "error";
+		try {
+			Carriage e = carriageDao.findById(t.getId());
+			if (e != null) {
+				carriageDao.delete(e);
+				msg = "success";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return msg;
+	}
+
+	@Transactional
+	@Override
+	public String update(Carriage newT) {
+		String msg = "error";
+		try {
+			Carriage e = carriageDao.findById(newT.getId());
+			if (e != null) {
+				carriageDao.update(newT);
+				msg = "success";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return msg;
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public List<Carriage> findAll() {
+		List<Carriage> carriages = null;
+		try {
+			carriages = carriageDao.findAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return carriages;
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public Carriage findById(Integer k) {
+		Carriage carriage = null;
+		try {
+			carriage = carriageDao.findById(k);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return carriage;
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public List<Carriage> findByProperty(String propName, Object propVal) {
+		List<Carriage> carriages = null;
+		try {
+			carriages = carriageDao.findByProperty(propName, propVal);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return carriages;
+	}
+
+	
+
+
+
+}

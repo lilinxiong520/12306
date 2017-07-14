@@ -1,0 +1,41 @@
+package test.java.sessionFactory;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import hibernate.Admin;
+import hibernate.Station;
+
+public class SessionTest {
+
+	private ApplicationContext ctx;
+
+	@Before
+	public void setUp() throws Exception {
+		ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+	}
+
+	@Test
+	public void testSessionFactory() {
+		SessionFactory sessionFactory = (SessionFactory) ctx.getBean("sessionFactory");
+		System.out.println(sessionFactory);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+	}
+
+	@Test
+	public void test() {
+		SessionFactory sessionFactory = (SessionFactory) ctx.getBean("sessionFactory");
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		
+	}
+}

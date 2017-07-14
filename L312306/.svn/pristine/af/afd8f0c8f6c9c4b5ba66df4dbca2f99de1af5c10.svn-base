@@ -1,0 +1,105 @@
+package com.java.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.java.dao.idao.IRouteDao;
+import com.java.service.iservice.IRouteService;
+
+import hibernate.Route;
+
+@Service("routeService")
+public class ServiceRouteImpl implements IRouteService {
+	@Autowired
+	@Qualifier("routeDao")
+	private IRouteDao routeDao;
+
+	@Transactional
+	@Override
+	public String save(Route t) {
+		String msg = "error";
+		try {
+			List<Route> routes = routeDao.findByProperty("id", t.getId());
+			if (routes.size() == 0) {
+				routeDao.save(t);
+				msg = "success";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return msg;
+	}
+
+	@Transactional
+	@Override
+	public String delete(Route t) {
+		String msg = "error";
+		try {
+			Route e = routeDao.findById(t.getId());
+			if (e != null) {
+				routeDao.delete(e);
+				msg = "success";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return msg;
+	}
+
+	@Transactional
+	@Override
+	public String update(Route newT) {
+		String msg = "error";
+		try {
+			Route e = routeDao.findById(newT.getId());
+			if (e != null) {
+				routeDao.update(newT);
+				msg = "success";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return msg;
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public List<Route> findAll() {
+		List<Route> routes = null;
+		try {
+			routes = routeDao.findAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return routes;
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public Route findById(Integer k) {
+		Route route = null;
+		try {
+			route = routeDao.findById(k);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return route;
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public List<Route> findByProperty(String propName, Object propVal) {
+		List<Route> routes = null;
+		try {
+			routes = routeDao.findByProperty(propName, propVal);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return routes;
+	}
+
+}

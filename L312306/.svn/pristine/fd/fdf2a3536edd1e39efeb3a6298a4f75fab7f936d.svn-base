@@ -1,0 +1,22 @@
+package com.java.dao.idao;
+
+import java.util.List;
+/**
+ * 
+ * @author Administrator
+ *
+ * @param <T>  POJO
+ * @param <K>  POJO 
+ */
+public interface IBaseDao<T, K> {
+
+	void save(T t) throws Exception;
+
+	void delete(T t) throws Exception;
+
+	void update(T newT) throws Exception;
+
+	List<T> findAll() throws Exception;
+
+	T findById(K k) throws Exception;
+}

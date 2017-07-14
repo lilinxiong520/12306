@@ -1,0 +1,61 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>车站信息</title>
+</head>
+<body>
+<h3>车站管理</h3>
+	<table border="1">
+		<tr>
+			<td>车站代码</td>
+			<td>车站名</td>
+			<td>拼音码</td>
+			<td>所属行政区域</td>
+			<td>车站等级</td>
+			<td>所属铁路局</td>
+			<td>联系地址</td>
+		</tr>
+		<c:forEach items="${stationListFromServer}" var="st">
+			<tr>
+				<td>${st.id }</td>
+				<td>${st.name }</td>
+				<td>${st.pinyin }</td>
+				<td>${st.region }</td>
+				<td>${st.range }</td>
+				<td>${st.company }</td>
+				<td>${st.address }</td>
+				<td>
+				<a href="${pageContext.request.contextPath }/station_delete.action?id=${st.id }" onClick="return confirm('是否确定删除？');">删除</a> 
+				<a href="${pageContext.request.contextPath }/station_find_findById.action?id=${st.id }&type=update">更新</a></td>
+			</tr>
+		</c:forEach>
+	</table>
+	<br />
+	<a href="${pageContext.request.contextPath }/station_save.jsp">新增车站</a>
+	<br />
+	<br />
+	<form action="${pageContext.request.contextPath }/station_find_findById.action" method="post">
+		车站编号：<input type="text" name="id"> 
+		<input type="submit" value="根据编号查询" />
+	</form>
+	<br />
+	<form
+		action="${pageContext.request.contextPath }/station_find_findByProperty.action"
+		method="post">
+		查询条件：
+		<select name="propName">
+			<option value="name" selected="selected">车站名</option>
+			<option value="pinyin">拼音码</option>
+			<option value="region">所属行政区域</option>
+		</select>
+		<input type="text" name="propVal" value="长沙"> 
+		<br/>
+		<input type="submit" value="查询" />
+	</form>
+	<br />
+</body>
+</html>
